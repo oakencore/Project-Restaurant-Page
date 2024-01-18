@@ -9,7 +9,7 @@ function loadInitialContent() {
   document.body.style.height = "100%";
   document.body.style.width = "100%";
   // Say no to horizontal scrollbars!
-  document.body.style.overflowX = "hidden"; 
+  document.body.style.overflowX = "hidden";
 
   const contentDiv = document.getElementById("content");
   contentDiv.style.position = "relative";
@@ -22,8 +22,10 @@ function loadInitialContent() {
   header.style.display = "flex";
   header.style.flexDirection = "row";
   header.style.justifyContent = "space-between";
+  header.style.width = "150px";
   header.style.alignItems = "center";
-  header.style.padding = "2%";
+  header.style.paddingBlockStart = "2%";
+  header.style.paddingBlockEnd = "2%";
   contentDiv.appendChild(header);
 
   const leftDiv = newDiv("left");
@@ -32,6 +34,7 @@ function loadInitialContent() {
   leftDiv.style.justifyContent = "space-between";
   leftDiv.style.alignItems = "center";
   leftDiv.style.gap = "25px";
+
   header.appendChild(leftDiv);
 
   const rightDiv = newDiv("right");
@@ -58,20 +61,28 @@ function loadInitialContent() {
   logoText.style.paddingBottom = "5%";
   logoText.style.fontSize = "150px";
   contentDiv.appendChild(logoText);
-  // The width per character in pixels
-  const estimatedCharacterWidth = 101;
-
-  const logoTextContentLength = logoText.textContent.length;
-
-  const estimatedDividerWidth = estimatedCharacterWidth * logoTextContentLength;
 
   const divider = newDiv("divider");
   divider.style.height = "10px";
+  const logoTextContentLength = logoText.textContent.length;
+  // The width per character in pixels
+  const estimatedCharacterWidth = 101;
+  const estimatedDividerWidth = estimatedCharacterWidth * logoTextContentLength;
   divider.style.width = estimatedDividerWidth + "px";
   divider.style.backgroundColor = "black";
-  divider.style.marginLeft = "auto"; 
-  divider.style.marginRight = "auto"; 
-  contentDiv.insertBefore(divider, logoText);
+  divider.style.marginLeft = "auto";
+  divider.style.marginRight = "auto";
+  divider.style.boxSizing = "border-box";
+
+  // Aligning my header and divider widths
+  header.style.width = estimatedDividerWidth + "px";
+  header.style.boxSizing = "border-box";
+  header.style.margin = "0 auto";
+
+  // Had to append in this order to not mess up the layout. Will look at a better way to do this.
+  contentDiv.appendChild(header);
+  contentDiv.appendChild(divider);
+  contentDiv.appendChild(logoText);
 
   const productImages = newDiv("productImages");
   productImages.style.display = "flex";
@@ -117,10 +128,23 @@ function loadInitialContent() {
   footer.style.position = "fixed";
   footer.style.bottom = "0";
   footer.style.left = "0";
-  footer.style.height = "80px";
+  footer.style.height = "40px";
   footer.style.width = "100%";
   footer.style.backgroundColor = "black";
   contentDiv.appendChild(footer);
+
+  const footerText = newDiv(
+    "footerText",
+    "2024. GREENBURGER. ALL RIGHTS RESERVED."
+  );
+  footerText.style.display = "flex";
+  footerText.style.flexDirection = "row";
+  footerText.style.justifyContent = "space-between";
+  footerText.style.alignItems = "center";
+  footerText.style.padding = "1%";
+  footerText.style.fontSize = "10px";
+  footerText.style.color = "grey";
+  footer.appendChild(footerText);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -128,10 +152,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function newDiv(divId, content) {
-  // Create a new div 
+  // Create a new div
   const div = document.createElement("div");
 
-  // Set the ID for the div class
+  // Sets the ID for the div class
   if (divId) {
     div.id = divId;
   }
