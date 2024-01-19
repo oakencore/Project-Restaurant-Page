@@ -40,20 +40,73 @@ export function loadInitialContent() {
   let originalHeader = header;
 
   const headerWithLogoText = newDiv("header");
+  headerWithLogoText.style.height = "60px";
   headerWithLogoText.style.display = "flex";
-  headerWithLogoText.style.justifyContent = "center";
+  headerWithLogoText.style.flexDirection = "row";
+  headerWithLogoText.style.justifyContent = "space-between";
   headerWithLogoText.style.alignItems = "center";
   headerWithLogoText.style.flexGrow = "0";
   headerWithLogoText.style.flexShrink = "1";
   headerWithLogoText.style.flexBasis = "auto";
-  // make header have space between divs for logo
-  header.style.justifyContent = "space-between";
+  // headerWithLogoText.style.backgroundColor = "blue";
+  headerWithLogoText.style.paddingLeft = "90px";
+  headerWithLogoText.style.paddingRight = "85px";
 
-  // Swaps headers on mouse click of a tab item
+  const leftDivWithLogoText = newDiv("left");
+  leftDivWithLogoText.style.display = "flex";
+  leftDivWithLogoText.style.flexDirection = "row";
+  leftDivWithLogoText.style.justifyContent = "space-between";
+  leftDivWithLogoText.style.alignItems = "center";
+  leftDivWithLogoText.style.alignContent = "center";
+  leftDivWithLogoText.style.gap = "25px";
+  leftDivWithLogoText.style.flex = "0 1 auto";
+  // leftDivWithLogoText.style.backgroundColor = "red";
+
+  const rightDivWithLogoText = newDiv("right");
+  rightDivWithLogoText.style.display = "flex";
+  rightDivWithLogoText.style.flexDirection = "row";
+  rightDivWithLogoText.style.justifyContent = "center";
+  rightDivWithLogoText.style.flex = "0 1 auto";
+  // rightDivWithLogoText.style.backgroundColor = "red";
+
+  appendChildFunction(headerWithLogoText, leftDivWithLogoText);
+  appendChildFunction(headerWithLogoText, rightDivWithLogoText);
+
   function swapHeader(newHeader) {
     if (contentDiv.contains(originalHeader)) {
+      // Transfer all children from leftDiv to leftDivWithLogoText
+      while (leftDiv.firstChild) {
+        leftDivWithLogoText.appendChild(leftDiv.firstChild);
+      }
+
+      // Transfer all children from rightDiv to rightDivWithLogoText
+      while (rightDiv.firstChild) {
+        rightDivWithLogoText.appendChild(rightDiv.firstChild);
+      }
+
+      // Place logoText between leftDivWithLogoText and rightDivWithLogoText
+      newHeader.appendChild(leftDivWithLogoText);
+      newHeader.appendChild(logoText); // logoText comes after leftDivWithLogoText
+      newHeader.appendChild(rightDivWithLogoText);
+
+      // Replace originalHeader with the new headerWithLogoText
       contentDiv.replaceChild(newHeader, originalHeader);
     } else if (contentDiv.contains(headerWithLogoText)) {
+      // Swap back to the original header layout
+      // Transfer all children from leftDivWithLogoText to leftDiv
+      while (leftDivWithLogoText.firstChild) {
+        leftDiv.appendChild(leftDivWithLogoText.firstChild);
+      }
+
+      // Move logoText back to its original position
+      contentDiv.insertBefore(logoText, divider); // Assuming logoText originally comes before the divider
+
+      // Transfer all children from rightDivWithLogoText to rightDiv
+      while (rightDivWithLogoText.firstChild) {
+        rightDiv.appendChild(rightDivWithLogoText.firstChild);
+      }
+
+      // Replace headerWithLogoText with the original header
       contentDiv.replaceChild(originalHeader, headerWithLogoText);
     }
   }
@@ -62,9 +115,8 @@ export function loadInitialContent() {
   leftDiv.style.display = "flex";
   leftDiv.style.flexDirection = "row";
   leftDiv.style.justifyContent = "space-between";
-  leftDiv.style.alignItems = "center";
-  leftDiv.style.alignContent = "center";
-  leftDiv.style.gap = "25px";
+  // leftDiv.style.backgroundColor = "red";
+  leftDiv.style.gap = "20px";
   appendChildFunction(header, leftDiv);
 
   const rightDiv = newDiv("right");
@@ -74,17 +126,50 @@ export function loadInitialContent() {
   appendChildFunction(header, rightDiv);
 
   const menu = newDiv("menu", "Menu");
-  addHoverEffect(menu);
-  makeClickable(menu, () => {
-    console.log("Menu clicked");
-    productImages.style.display = "none";
-    logoText.style.fontSize = "50px";
-    logoText.style.padding = "0";
-    logoText.style.margin = "0";
-    headerWithLogoText.appendChild(logoText);
+addHoverEffect(menu);
+makeClickable(menu, () => {
+  console.log("Menu clicked");
+  productImages.style.display = "none";
+  logoText.style.fontSize = "50px";
+  logoText.style.padding = "0";
+  logoText.style.margin = "0";
+  logoText.style.alignSelf = "center";
 
-    swapHeader(headerWithLogoText);
-  });
+  appendChildFunction(headerWithLogoText, logoText);
+  swapHeader(headerWithLogoText);
+
+  let wrapperDiv = document.getElementById("menuWrapper");
+
+  if (!wrapperDiv) {
+    wrapperDiv = createWrapperDiv();
+    contentDiv.appendChild(wrapperDiv);
+
+    let menuContent = createMenuContent(); 
+    wrapperDiv.appendChild(menuContent);
+
+    let menuFoodImage = createFoodImage(); 
+    wrapperDiv.appendChild(menuFoodImage);
+  }
+
+ 
+  if (wrapperDiv.style.display === "none" || !wrapperDiv.style.display) {
+    wrapperDiv.style.display = "flex";
+    wrapperDiv.style.justifyContent = "space-between";
+    wrapperDiv.style.alignItems = "center";
+
+    wrapperDiv.style.paddingLeft = "8%"; 
+    wrapperDiv.style.paddingRight = "8%"; 
+    wrapperDiv.style.marginTop = "8vh"
+    // wrapperDiv.style.backgroundColor = "red"; 
+    document.getElementById("menuContent").style.display = "block";
+    document.getElementById("menuFoodImage").style.display = "block";
+  } else {
+    wrapperDiv.style.display = "none";
+    document.getElementById("menuContent").style.display = "none";
+    document.getElementById("menuFoodImage").style.display = "none";
+  }
+});
+
   appendChildFunction(leftDiv, menu);
 
   const address = newDiv("address", "Visit Us");
@@ -132,8 +217,10 @@ export function loadInitialContent() {
   logoText.style.paddingTop = "1%";
   logoText.style.paddingBottom = "5%";
   logoText.style.fontSize = "150px";
+  logoText.style.margin = "0 10px";
   appendChildFunction(contentDiv, logoText);
 
+  // TODO: I've tried to make the divider always be the same width as the logo. But selecting new tabs breaks it. This seems convoluted. There must be a simpler way.
   const divider = newDiv("divider");
   divider.style.height = "10px";
   const logoTextContentLength = logoText.textContent.length;
@@ -230,8 +317,65 @@ export function loadInitialContent() {
       parentElement.appendChild(childElement);
     }
   }
+
+  // Function to create and return the menu content div
+  function createMenuContent() {
+    const menuContent = newDiv("menuContent");
+    menuContent.style.display = "none"; // Initially hidden
+
+    // Add menu sections here
+    // Example: Adding the Burgers section
+    const burgersSection = newDiv("burgersSection");
+    burgersSection.innerHTML = `<h2>Burgers</h2>
+      <p>The Avocado Dream - $12.50</p>
+      <p>The Vegan Delight - $13.00</p>
+      <p>The Truffle Shuffle - $15.00</p>`;
+    menuContent.appendChild(burgersSection);
+
+    const sidesSection = newDiv("sidesSection");
+    sidesSection.innerHTML = `<h2>Sides</h2>
+      <p>Organic Sweet Potato Fries - $6.00</p>
+      <p>Kale Caesar Salad - $8.00</p>`;
+    menuContent.appendChild(sidesSection);
+
+    const drinksSection = newDiv("drinksSection");
+    drinksSection.innerHTML = `<h2>Drinks</h2>
+      <p>Craft Root Beer - $4.00</p>
+      <p>Kombucha on Tap - $5.00</p>`;
+    menuContent.appendChild(drinksSection);
+
+    return menuContent;
+  }
+
+  function createFoodImage() {
+    const menuFoodImage = newDiv("menuFoodImage");
+    menuFoodImage.style.display = "none"; 
+
+    const menuFoodDisplayImage = document.createElement("img");
+    menuFoodDisplayImage.src = "menuBurgersImage.png";
+    menuFoodDisplayImage.alt =
+      "Image of a spread of items on the GREENBURGER menu";
+    menuFoodDisplayImage.style.width = "400px";
+    menuFoodDisplayImage.style.height = "400px";
+
+    menuFoodImage.appendChild(menuFoodDisplayImage); 
+
+    return menuFoodImage;
+  }
+
+  function createWrapperDiv() {
+    const wrapperDiv = newDiv("menuWrapper");
+    wrapperDiv.style.display = "none";
+    return wrapperDiv;
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   loadInitialContent();
+
+  // Simulate a click on the menu button
+  const menuButton = document.getElementById("menu"); 
+  if (menuButton) {
+    menuButton.click();
+  }
 });
