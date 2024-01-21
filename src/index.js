@@ -1,5 +1,6 @@
-import { loadInitialContent } from "./loadInitialContent.js";
+import { initialisePageContent } from "./loadInitialContent.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadInitialContent();
+  initialisePageContent();
+  addClickEventListeners();
 });

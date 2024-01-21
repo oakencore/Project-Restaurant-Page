@@ -1,5 +1,6 @@
 // Import statements
 import { newDiv } from "./divFunctions.js";
+console.log(newDiv);
 import { addHoverEffect } from "./hoverFunction.js";
 import { makeClickable } from "./clickable.js";
 import {
@@ -41,26 +42,16 @@ import { createLogoTextDiv } from "./logo.js";
 
 // Global Variables
 let contentDiv;
-let headerWithLogoText;
-let leftDivWithLogoText;
-let rightDivWithLogoText;
-let addressContent;
-let contactContent;
+let header;
+let leftDiv;
+let rightDiv;
+let menuDiv;
+let addressDiv;
+let contactDiv;
+let bookingDiv;
 
-// DOM content loaded event handler
-document.addEventListener("DOMContentLoaded", () => {
-  initialisePageContent();
-  addClickEventListeners();
-  // Simulated click
-  // simulateInitialClick();
-});
-
-// Helper functions *---------------------------HELPER FUNCTIONS--------------------------------------*
-
-function initialisePageContent() {
-  // Check if the header already exists to prevent duplication
-  if (document.getElementById("header")) return;
-
+// Function to initialize page content
+export function initialisePageContent() {
   // Apply global styles
   setGlobalStyles();
 
@@ -73,51 +64,32 @@ function initialisePageContent() {
   }
 
   // Setup Header
-  const header = setupHeader();
+  header = setupHeader();
   appendChildFunction(contentDiv, header);
 
   // Setup divs within header div
-  const { leftDiv, rightDiv } = createHeaderDivs();
+  ({ leftDiv, rightDiv } = createHeaderDivs());
   appendChildFunction(header, leftDiv);
   appendChildFunction(header, rightDiv);
 
-  // Add menu, address and contact to leftDiv
-  const menuDiv = createMenuDiv();
-  const addressDiv = createAddressDiv();
-  const contactDiv = createContactDiv();
+  // Add menu, address, contact to leftDiv
+  menuDiv = createMenuDiv();
+  addressDiv = createAddressDiv();
+  contactDiv = createContactDiv();
   appendChildFunction(leftDiv, menuDiv);
   appendChildFunction(leftDiv, addressDiv);
   appendChildFunction(leftDiv, contactDiv);
 
   // Add Booking to rightDiv
-  const bookingDiv = createBookingDiv();
+  bookingDiv = createBookingDiv();
   appendChildFunction(rightDiv, bookingDiv);
 
-  // Add Footer, background and product images
+  // Add Footer, background, and product images
   const footer = createFooterTextDiv();
   const { leftBackground, rightBackground } = createBackgroundDivs();
   const productImages = createProductImagesDiv();
+  appendChildFunction(contentDiv, footer);
   appendChildFunction(contentDiv, leftBackground);
   appendChildFunction(contentDiv, rightBackground);
-  appendChildFunction(contentDiv, footer);
   appendChildFunction(contentDiv, productImages);
 }
-
-// Call initialisePageContent function on DOMContentLoaded
-document.addEventListener("DOMContentLoaded", initialisePageContent);
-
-appendChildFunction(headerWithLogoText, leftDivWithLogoText);
-appendChildFunction(headerWithLogoText, rightDivWithLogoText);
-appendChildFunction(contentDiv, addressContent);
-appendChildFunction(contentDiv, contactContent);
-
-// Attaching click event listeners
-document.getElementById("menu").addEventListener("click", handleMenuContent);
-document
-  .getElementById("address")
-  .addEventListener("click", handleAddressContent);
-document
-  .getElementById("contact")
-  .addEventListener("click", handleContactContent);
-
-
