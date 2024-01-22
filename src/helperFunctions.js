@@ -1,3 +1,5 @@
+import { newDiv } from "./divFunctions.js";
+import { appendChildFunction } from "./appendChildFunction.js";
 // TODO: Might need to add the swap function here?
 export function setupHeaderWithLogoText(contentDiv) {
   // Header with logo Setup

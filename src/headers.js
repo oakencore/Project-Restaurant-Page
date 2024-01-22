@@ -1,3 +1,5 @@
+import { newDiv } from "./divFunctions.js";
+import { appendChildFunction } from "./appendChildFunction.js";
 export function createHeaderDivs() {
   const leftDiv = newDiv("left");
   leftDiv.style.display = "flex";

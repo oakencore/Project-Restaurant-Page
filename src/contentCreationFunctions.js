@@ -1,3 +1,6 @@
+import { newDiv } from "./divFunctions.js";
+import { appendChildFunction } from "./appendChildFunction.js";
+
 // Content Creation Functions
 
 export function createAddressContent() {

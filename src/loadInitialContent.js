@@ -1,8 +1,8 @@
 // Import statements
 import { newDiv } from "./divFunctions.js";
-console.log(newDiv);
 import { addHoverEffect } from "./hoverFunction.js";
 import { makeClickable } from "./clickable.js";
+import { addClickEventListeners } from "./eventlisteners.js";
 import {
   createAddressContent,
   createContactContent,
@@ -25,7 +25,6 @@ import {
   setupFooter,
   setupBackground,
 } from "./helperFunctions.js";
-import { addClickEventListeners } from "./eventlisteners.js";
 import {
   createHeaderDivs,
   createHeaderDivsWithLogoText,
@@ -63,6 +62,10 @@ export function initialisePageContent() {
     document.body.appendChild(contentDiv);
   }
 
+  // Created product images first as they are needed in createMenuDiv later
+  const productImages = createProductImagesDiv();
+  const logoText = createLogoTextDiv();
+
   // Setup Header
   header = setupHeader();
   appendChildFunction(contentDiv, header);
@@ -73,7 +76,7 @@ export function initialisePageContent() {
   appendChildFunction(header, rightDiv);
 
   // Add menu, address, contact to leftDiv
-  menuDiv = createMenuDiv();
+  menuDiv = createMenuDiv(productImages,logoText);
   addressDiv = createAddressDiv();
   contactDiv = createContactDiv();
   appendChildFunction(leftDiv, menuDiv);
@@ -87,7 +90,6 @@ export function initialisePageContent() {
   // Add Footer, background, and product images
   const footer = createFooterTextDiv();
   const { leftBackground, rightBackground } = createBackgroundDivs();
-  const productImages = createProductImagesDiv();
   appendChildFunction(contentDiv, footer);
   appendChildFunction(contentDiv, leftBackground);
   appendChildFunction(contentDiv, rightBackground);

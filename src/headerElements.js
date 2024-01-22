@@ -1,13 +1,22 @@
+import { newDiv } from "./divFunctions.js";
+import { appendChildFunction } from "./appendChildFunction.js";
+import { addHoverEffect } from "./hoverFunction.js";
+import { makeClickable } from "./clickable.js";
+
 export function createMenuDiv() {
   const menu = newDiv("menu", "Menu");
   addHoverEffect(menu);
   makeClickable(menu, () => {
     console.log("Menu clicked");
-    productImages.style.display = "none";
-    logoText.style.fontSize = "50px";
-    logoText.style.padding = "0";
-    logoText.style.margin = "0";
-    logoText.style.alignSelf = "center";
+    if (productImages) {
+      productImages.style.display = "none";
+    }
+    if (logoText) {
+      logoText.style.fontSize = "50px";
+      logoText.style.padding = "0";
+      logoText.style.margin = "0";
+      logoText.style.alignSelf = "center";
+    }
 
     appendChildFunction(headerWithLogoText, logoText);
     swapHeader(headerWithLogoText);
@@ -25,6 +34,16 @@ export function createMenuDiv() {
       wrapperDiv.appendChild(menuFoodImage);
     }
 
+    let menuContent = document.getElementById("menuContent");
+    if (menuContent) {
+      menuContent.style.display = "block";
+    }
+
+    let menuFoodImage = document.getElementById("menuFoodImage");
+    if (menuFoodImage) {
+      menuFoodImage.style.display = "block";
+    }
+
     if (wrapperDiv.style.display === "none" || !wrapperDiv.style.display) {
       wrapperDiv.style.display = "flex";
       wrapperDiv.style.justifyContent = "space-between";
@@ -33,12 +52,28 @@ export function createMenuDiv() {
       wrapperDiv.style.paddingLeft = "8%";
       wrapperDiv.style.paddingRight = "8%";
       wrapperDiv.style.marginTop = "8vh";
-      document.getElementById("menuContent").style.display = "block";
-      document.getElementById("menuFoodImage").style.display = "block";
+
+      let menuContentToShow = document.getElementById("menuContent");
+      if (menuContentToShow) {
+        menuContentToShow.style.display = "block";
+      }
+
+      let menuFoodImageToShow = document.getElementById("menuFoodImage");
+      if (menuFoodImageToShow) {
+        menuFoodImageToShow.style.display = "block";
+      }
     } else {
       wrapperDiv.style.display = "none";
-      document.getElementById("menuContent").style.display = "none";
-      document.getElementById("menuFoodImage").style.display = "none";
+
+      let menuContentToHide = document.getElementById("menuContent");
+      if (menuContentToHide) {
+        menuContentToHide.style.display = "none";
+      }
+
+      let menuFoodImageToHide = document.getElementById("menuFoodImage");
+      if (menuFoodImageToHide) {
+        menuFoodImageToHide.style.display = "none";
+      }
     }
   });
 

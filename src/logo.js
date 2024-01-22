@@ -1,3 +1,5 @@
+import { newDiv } from "./divFunctions.js";
+
 export function createLogoTextDiv() {
     const logoText = newDiv("logo", "GREENBURGER");
     logoText.style.display = "flex";

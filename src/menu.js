@@ -1,9 +1,5 @@
-import { newDiv } from "./divFunctions.js";
-
-export function loadMenu() {
-  
-}
+export function loadMenu() {}
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadMenu();
+  loadMenu();
 });
