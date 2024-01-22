@@ -1,3 +1,5 @@
+import { handleAddressContent, handleContactContent, handleMenuContent } from "./helperFunctions";
+
 export function addClickEventListeners() {
     document.getElementById("menu").addEventListener("click", handleMenuContent);
     document

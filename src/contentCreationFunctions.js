@@ -24,25 +24,28 @@ export function createContactContent() {
 }
 
 export function createProductImagesDiv() {
+  console.log("Creating a div productImages")
   const productImages = newDiv("productImages");
   productImages.style.display = "flex";
   productImages.style.flexDirection = "row";
   productImages.style.justifyContent = "space-around";
   productImages.style.alignItems = "center";
 
+  console.log("Appending burgerImage image to productImages")
   const burgerImage = document.createElement("img");
   burgerImage.src = "greenburger.webp";
   burgerImage.alt = "Image of a GreenBurger cheese burger";
   burgerImage.style.width = "400px";
   burgerImage.style.height = "400px";
-  productImages.appendChild(burgerImage);
+  appendChildFunction(productImages, burgerImage)
 
+  console.log("Appending sides image to productImages")
   const sidesImage = document.createElement("img");
   sidesImage.src = "sides.png";
-  sidesImage.alt = "Image of a GreenBurger cheese burger";
+  sidesImage.alt = "Image of a GreenBurger side";
   sidesImage.style.width = "400px";
   sidesImage.style.height = "400px";
-  productImages.appendChild(sidesImage);
+  appendChildFunction(productImages, sidesImage);
 
   return productImages;
 }
@@ -59,6 +62,7 @@ export function createBackgroundDivs() {
 }
 
 export function createFooterTextDiv() {
+  console.log("Creating Footer")
   const footerText = newDiv(
     "footerText",
     "2024. GREENBURGER. ALL RIGHTS RESERVED."

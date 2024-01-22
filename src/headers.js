@@ -1,5 +1,7 @@
 import { newDiv } from "./divFunctions.js";
 import { appendChildFunction } from "./appendChildFunction.js";
+import { createLogoTextDiv } from "./logo.js";
+
 export function createHeaderDivs() {
   const leftDiv = newDiv("left");
   leftDiv.style.display = "flex";
@@ -45,6 +47,7 @@ export function swapToHeaderWithLogoText() {
 }
 
 export function swapHeader(newHeader) {
+  const logoText = createLogoTextDiv();
   if (contentDiv.contains(originalHeader)) {
     // Transfer all children from leftDiv to leftDivWithLogoText
     while (leftDiv.firstChild) {

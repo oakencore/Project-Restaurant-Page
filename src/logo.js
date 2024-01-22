@@ -1,7 +1,10 @@
 import { newDiv } from "./divFunctions.js";
 
+let logoText = null;
+
 export function createLogoTextDiv() {
-    const logoText = newDiv("logo", "GREENBURGER");
+  if (!logoText) {
+    logoText = newDiv("logo", "GREENBURGER");
     logoText.style.display = "flex";
     logoText.style.flexDirection = "row";
     logoText.style.justifyContent = "center";
@@ -10,5 +13,7 @@ export function createLogoTextDiv() {
     logoText.style.paddingBottom = "5%";
     logoText.style.fontSize = "150px";
     logoText.style.margin = "0 10px";
-    return logoText;
+    console.log("logoText Created");
   }
+  return logoText;
+}

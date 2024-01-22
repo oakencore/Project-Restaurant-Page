@@ -1,5 +1,6 @@
 import { newDiv } from "./divFunctions.js";
 import { appendChildFunction } from "./appendChildFunction.js";
+import { createLogoTextDiv } from "./logo.js";
 // TODO: Might need to add the swap function here?
 export function setupHeaderWithLogoText(contentDiv) {
   // Header with logo Setup
@@ -15,12 +16,13 @@ export function setupHeaderWithLogoText(contentDiv) {
   // headerWithLogoText.style.backgroundColor = "blue";
   headerWithLogoText.style.paddingLeft = "90px";
   headerWithLogoText.style.paddingRight = "85px";
-
+  console.log("headerWithLogoText created")
   return headerWithLogoText;
 }
 
 // TODO: I've tried to make the divider always be the same width as the logo. But selecting new tabs breaks it. This seems convoluted. There must be a simpler way.
-export function createDivider(logoText) {
+export function createDivider() {
+  const logoText = createLogoTextDiv();
   const divider = newDiv("divider");
   divider.style.height = "10px";
 
@@ -42,13 +44,14 @@ export function createDivider(logoText) {
     header.style.boxSizing = "border-box";
     header.style.margin = "0 auto";
   }
-
+  console.log("Divider created")
   return divider;
 }
 
 export function createWrapperDiv() {
   const wrapperDiv = newDiv("menuWrapper");
   wrapperDiv.style.display = "none";
+  console.log("wrapperdiv created")
   return wrapperDiv;
 }
 
@@ -57,18 +60,21 @@ export function handleMenuContent() {
   document.getElementById("menuContent").style.display = "block";
   document.getElementById("addressContent").style.display = "none";
   document.getElementById("contactContent").style.display = "none";
+  console.log("Menu Content Handled")
 }
 
 export function handleAddressContent() {
   document.getElementById("menuContent").style.display = "none";
   document.getElementById("addressContent").style.display = "block";
   document.getElementById("contactContent").style.display = "none";
+  console.log("Address Content Handled")
 }
 
 export function handleContactContent() {
   document.getElementById("menuContent").style.display = "none";
   document.getElementById("addressContent").style.display = "none";
   document.getElementById("contactContent").style.display = "block";
+  console.log("Contact Content Handled")
 }
 
 // Helper functions
@@ -84,9 +90,11 @@ export function setGlobalStyles() {
   document.body.style.width = "100%";
   // Say no to horizontal scrollbars!
   document.body.style.overflowX = "hidden";
+  console.log("Global Styles Applied")
 }
 
 export function setupHeader(contentDiv) {
+  console.log("setupHeader: Creating Header")
   const header = newDiv("header");
   header.style.height = "60px";
   header.style.display = "flex";
@@ -96,12 +104,13 @@ export function setupHeader(contentDiv) {
   header.style.alignItems = "center";
   header.style.paddingBlockStart = "2%";
   header.style.paddingBlockEnd = "2%";
-  appendChildFunction(contentDiv, header);
   let originalHeader = header;
+  return header
 }
 
 
-export function setupFooter(contentDiv) {
+export function setupFooter() {
+  console.log("setupFooter: Creating Footer")
   const footer = document.createElement("footer");
   footer.style.position = "fixed";
   footer.style.bottom = "0";
@@ -109,10 +118,11 @@ export function setupFooter(contentDiv) {
   footer.style.height = "40px";
   footer.style.width = "100%";
   footer.style.backgroundColor = "black";
-  appendChildFunction(contentDiv, footer);
+  return footer;
 }
 
 export function setupBackground(contentDiv) {
+  console.log("setupBackground: Creating background div")
   const background = newDiv("background");
   background.style.display = "flex";
   background.style.position = "absolute";
@@ -122,4 +132,5 @@ export function setupBackground(contentDiv) {
   background.style.height = "100%";
   background.style.zIndex = "-1";
   appendChildFunction(contentDiv, background);
+  console.log("setupBackground: Background created and appended to contentDiv")
 }

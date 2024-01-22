@@ -1,36 +1,17 @@
 // Import statements
-import { newDiv } from "./divFunctions.js";
-import { addHoverEffect } from "./hoverFunction.js";
-import { makeClickable } from "./clickable.js";
-import { addClickEventListeners } from "./eventlisteners.js";
 import {
-  createAddressContent,
-  createContactContent,
   createProductImagesDiv,
   createBackgroundDivs,
   createFooterTextDiv,
-  createFoodImage,
-  createMenuContent,
 } from "./contentCreationFunctions.js";
 import { appendChildFunction } from "./appendChildFunction.js";
 import {
-  setupHeaderWithLogoText,
   createDivider,
-  createWrapperDiv,
-  handleAddressContent,
-  handleContactContent,
-  handleMenuContent,
   setGlobalStyles,
-  setupHeader,
   setupFooter,
-  setupBackground,
+  setupHeader,
 } from "./helperFunctions.js";
-import {
-  createHeaderDivs,
-  createHeaderDivsWithLogoText,
-  swapToHeaderWithLogoText,
-  swapHeader,
-} from "./headers.js";
+import { createHeaderDivs } from "./headers.js";
 import {
   createMenuDiv,
   createAddressDiv,
@@ -53,12 +34,9 @@ export function initialisePageContent() {
   let contactDiv;
   let bookingDiv;
 
-  // Apply global styles
-  setGlobalStyles();
-
   // Create main content div if it doesn't exist
   try {
-    console.log("Applying styles");
+    console.log("Applying Global styles");
     setGlobalStyles();
 
     console.log("Getting contentDiv");
@@ -78,25 +56,7 @@ export function initialisePageContent() {
     throw error;
   }
 
-  // Created product images first as they are needed in createMenuDiv later
-  console.log("Creating product images");
-  const productImages = createProductImagesDiv();
-
-  if (!productImages) {
-    console.error("createProductImagesDiv returned null");
-    throw new Error("createProductImagesDiv returned null");
-  }
-  // debugger;
-
-  console.log("Creating logo text");
-  const logoText = createLogoTextDiv();
-  if (!logoText) {
-    console.error("createLogoTextDiv returned null");
-    throw new Error("createLogoTextDiv returned null");
-  }
-  // debugger;
-
-  // Setup Header
+  // Setup Header. The function returns the header.
   header = setupHeader();
   appendChildFunction(contentDiv, header);
 
@@ -105,8 +65,9 @@ export function initialisePageContent() {
   appendChildFunction(header, leftDiv);
   appendChildFunction(header, rightDiv);
 
-  // Add menu, address, contact to leftDiv
-  menuDiv = createMenuDiv(productImages, logoText);
+  // Add menu, address, contact to leftDiv.
+  // The createMenuDiv function creates and returns a clickable and hoverable 'menu' div, which toggles the display of various elements like productImages, logoText, and menu content on the page, based on their existence and current state.
+  menuDiv = createMenuDiv();
   if (!menuDiv) {
     throw new Error("createMenuDiv returned null");
   }
@@ -145,11 +106,43 @@ export function initialisePageContent() {
     throw new Error("appendChildFunction rightDiv returned null");
   }
 
-  // Add Footer, background, and product images
-  const footer = createFooterTextDiv();
+  const divider = createDivider();
+  appendChildFunction(contentDiv, divider);
+
+  //the createlogotextDiv function does not append to anything. It just returns the logotextdiv
+  console.log("Creating logo text");
+  const logoText = createLogoTextDiv();
+  if (!logoText) {
+    console.error("createLogoTextDiv returned null");
+    throw new Error("createLogoTextDiv returned null");
+  }
+  appendChildFunction(contentDiv, logoText);
+  // debugger;
+
+    // Created product images first as they are needed in createMenuDiv later
+  // The function appends both the burger and sides image to the a new div it creates called product images.
+  console.log("Creating product images");
+  const productImages = createProductImagesDiv();
+
+  if (!productImages) {
+    console.error("createProductImagesDiv returned null");
+    throw new Error("createProductImagesDiv returned null");
+  }
+  // debugger;
+
   const { leftBackground, rightBackground } = createBackgroundDivs();
-  appendChildFunction(contentDiv, footer);
+
   appendChildFunction(contentDiv, leftBackground);
   appendChildFunction(contentDiv, rightBackground);
   appendChildFunction(contentDiv, productImages);
+  
+  const footer = createFooterTextDiv();
+  appendChildFunction(contentDiv, footer);
+
+  const footerDiv = setupFooter()
+  appendChildFunction(contactDiv, footerDiv)
+
+
+
+
 }

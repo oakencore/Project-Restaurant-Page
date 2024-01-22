@@ -2,9 +2,12 @@ import { newDiv } from "./divFunctions.js";
 import { appendChildFunction } from "./appendChildFunction.js";
 import { addHoverEffect } from "./hoverFunction.js";
 import { makeClickable } from "./clickable.js";
+import { createLogoTextDiv } from "./logo.js";
+
 
 export function createMenuDiv() {
   const menu = newDiv("menu", "Menu");
+  const logoText = createLogoTextDiv();
   addHoverEffect(menu);
   makeClickable(menu, () => {
     console.log("Menu clicked");
@@ -82,6 +85,7 @@ export function createMenuDiv() {
 
 export function createAddressDiv() {
   const address = newDiv("address", "Visit Us");
+  const logoText = createLogoTextDiv();
   addHoverEffect(address);
   makeClickable(address, () => {
     logoText.style.display = "none";
@@ -93,6 +97,7 @@ export function createAddressDiv() {
 
 export function createContactDiv() {
   const contact = newDiv("contact", "Contact");
+  const logoText = createLogoTextDiv();
   addHoverEffect(contact);
   makeClickable(contact, () => {
     logoText.style.display = "none";
