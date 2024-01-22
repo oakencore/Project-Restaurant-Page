@@ -23,22 +23,29 @@ export function createContactContent() {
   return contactContent;
 }
 
-export function createProductImagesDiv() {
+export function createBurgerImage() {
   console.log("Creating burgerImage");
   const burgerImage = document.createElement("img");
   burgerImage.src = "greenburger.webp";
   burgerImage.alt = "Image of a GreenBurger cheese burger";
   burgerImage.style.width = "400px";
   burgerImage.style.height = "400px";
+  burgerImage.style.zIndex = "1";
+  burgerImage.style.position = "relative";
+  console.log(burgerImage);
+  return burgerImage;
+}
 
+export function createSidesImage() {
   console.log("Creating sides image");
   const sidesImage = document.createElement("img");
   sidesImage.src = "sides.png";
   sidesImage.alt = "Image of a GreenBurger side";
   sidesImage.style.width = "400px";
   sidesImage.style.height = "400px";
-
-  return { burgerImage, sidesImage };
+  sidesImage.style.zIndex = "1";
+  sidesImage.style.position = "relative";
+  return sidesImage;
 }
 
 export function createBackgroundDivs() {
@@ -46,8 +53,17 @@ export function createBackgroundDivs() {
   leftBackground.style.backgroundColor = "green";
   leftBackground.style.width = "50%";
   leftBackground.style.height = "100vh";
+  leftBackground.style.display = "flex";
+  leftBackground.style.justifyContent = "center";
+  leftBackground.style.alignItems = "center";
 
   const rightBackground = newDiv("rightBackground");
+  rightBackground.style.backgroundColor = "white";
+  rightBackground.style.width = "50%";
+  rightBackground.style.height = "100vh";
+  rightBackground.style.display = "flex";
+  rightBackground.style.justifyContent = "center";
+  rightBackground.style.alignItems =  "center";
 
   return { leftBackground, rightBackground };
 }
