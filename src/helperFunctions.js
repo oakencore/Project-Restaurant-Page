@@ -110,20 +110,18 @@ export function setupHeader(contentDiv) {
 
 
 export function setupFooter() {
-  console.log("setupFooter: Creating Footer")
-  const footer = document.createElement("footer");
-  footer.style.position = "fixed";
-  footer.style.bottom = "0";
-  footer.style.left = "0";
-  footer.style.height = "40px";
-  footer.style.width = "100%";
-  footer.style.backgroundColor = "black";
-  return footer;
+  const footerDiv = newDiv("footerDiv");
+  footerDiv.style.position = "fixed";
+  footerDiv.style.bottom = "0";
+  footerDiv.style.left = "0";
+  footerDiv.style.height = "40px";
+  footerDiv.style.width = "100%";
+  footerDiv.style.backgroundColor = "black";
+  return footerDiv;
 }
 
-export function setupBackground(contentDiv) {
-  console.log("setupBackground: Creating background div")
-  const background = newDiv("background");
+export function setupBackground(background) {
+  
   background.style.display = "flex";
   background.style.position = "absolute";
   background.style.top = "0";
@@ -131,6 +129,6 @@ export function setupBackground(contentDiv) {
   background.style.width = "100%";
   background.style.height = "100%";
   background.style.zIndex = "-1";
-  appendChildFunction(contentDiv, background);
-  console.log("setupBackground: Background created and appended to contentDiv")
+  console.log("setupBackground: Applied styling to background")
+  return background
 }

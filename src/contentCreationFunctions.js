@@ -24,30 +24,21 @@ export function createContactContent() {
 }
 
 export function createProductImagesDiv() {
-  console.log("Creating a div productImages")
-  const productImages = newDiv("productImages");
-  productImages.style.display = "flex";
-  productImages.style.flexDirection = "row";
-  productImages.style.justifyContent = "space-around";
-  productImages.style.alignItems = "center";
-
-  console.log("Appending burgerImage image to productImages")
+  console.log("Creating burgerImage");
   const burgerImage = document.createElement("img");
   burgerImage.src = "greenburger.webp";
   burgerImage.alt = "Image of a GreenBurger cheese burger";
   burgerImage.style.width = "400px";
   burgerImage.style.height = "400px";
-  appendChildFunction(productImages, burgerImage)
 
-  console.log("Appending sides image to productImages")
+  console.log("Creating sides image");
   const sidesImage = document.createElement("img");
   sidesImage.src = "sides.png";
   sidesImage.alt = "Image of a GreenBurger side";
   sidesImage.style.width = "400px";
   sidesImage.style.height = "400px";
-  appendChildFunction(productImages, sidesImage);
 
-  return productImages;
+  return { burgerImage, sidesImage };
 }
 
 export function createBackgroundDivs() {

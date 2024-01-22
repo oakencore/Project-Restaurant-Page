@@ -8,6 +8,7 @@ import { appendChildFunction } from "./appendChildFunction.js";
 import {
   createDivider,
   setGlobalStyles,
+  setupBackground,
   setupFooter,
   setupHeader,
 } from "./helperFunctions.js";
@@ -19,6 +20,7 @@ import {
   createBookingDiv,
 } from "./headerElements.js";
 import { createLogoTextDiv } from "./logo.js";
+import { newDiv } from "./divFunctions.js";
 
 // Function to initialize page content
 export function initialisePageContent() {
@@ -122,25 +124,35 @@ export function initialisePageContent() {
     // Created product images first as they are needed in createMenuDiv later
   // The function appends both the burger and sides image to the a new div it creates called product images.
   console.log("Creating product images");
-  const productImages = createProductImagesDiv();
+  const {burgerImage, sidesImage} = createProductImagesDiv();
 
-  if (!productImages) {
-    console.error("createProductImagesDiv returned null");
-    throw new Error("createProductImagesDiv returned null");
-  }
-  // debugger;
-
+  const background = newDiv("background")
+  setupBackground(background);
   const { leftBackground, rightBackground } = createBackgroundDivs();
 
-  appendChildFunction(contentDiv, leftBackground);
-  appendChildFunction(contentDiv, rightBackground);
-  appendChildFunction(contentDiv, productImages);
-  
-  const footer = createFooterTextDiv();
-  appendChildFunction(contentDiv, footer);
+  // TODO: fix layout here
+  appendChildFunction(burgerImage, leftBackground);
+  appendChildFunction(sidesImage, rightBackground);
 
+  appendChildFunction(background, leftBackground);
+  appendChildFunction(background, rightBackground);
+
+  appendChildFunction(contentDiv, background);
+  
+  
   const footerDiv = setupFooter()
-  appendChildFunction(contactDiv, footerDiv)
+  const footerText = createFooterTextDiv();
+  appendChildFunction(contentDiv, footerDiv)
+  appendChildFunction(footerDiv, footerText);
+
+ 
+  
+  
+  
+  
+
+  
+
 
 
 
