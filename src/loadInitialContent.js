@@ -1,10 +1,11 @@
 // Import statements
 import {
-  createProductImagesDiv,
   createBackgroundDivs,
   createFooterTextDiv,
   createBurgerImage,
   createSidesImage,
+  createMenuContent,
+  createFoodImage,
 } from "./contentCreationFunctions.js";
 import { appendChildFunction } from "./appendChildFunction.js";
 import {
@@ -69,6 +70,11 @@ export function initialisePageContent() {
   appendChildFunction(header, leftDiv);
   appendChildFunction(header, rightDiv);
 
+  //Set up hidden divs for menu. 
+  const greenBurgerMenu = createMenuContent();
+  const greenBurgerMenuImage = createFoodImage();
+  const clickedMenuDiv = {greenBurgerMenu, greenBurgerMenuImage};
+  
   // Add menu, address, contact to leftDiv.
   // The createMenuDiv function creates and returns a clickable and hoverable 'menu' div, which toggles the display of various elements like productImages, logoText, and menu content on the page, based on their existence and current state.
   menuDiv = createMenuDiv();

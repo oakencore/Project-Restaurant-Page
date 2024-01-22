@@ -1,8 +1,37 @@
 import { newDiv } from "./divFunctions.js";
 import { appendChildFunction } from "./appendChildFunction.js";
 import { createLogoTextDiv } from "./logo.js";
+import { createHeaderDivsWithLogoText, swapToHeaderWithLogoText } from "./headers.js";
 // TODO: Might need to add the swap function here?
-export function setupHeaderWithLogoText(contentDiv) {
+export function setupHeaderWithLogoText() {
+  // Use the functions from headers.js to create header divs with logo text
+  const { leftDivWithLogoText, rightDivWithLogoText } = createHeaderDivsWithLogoText();
+
+  // Assume originalHeader, leftDiv, rightDiv, etc. are defined globally or accessible here
+  // Swap the headers
+  swapToHeaderWithLogoText();
+
+  // Retrieve clickedMenuDiv elements
+  const { greenBurgerMenu, greenBurgerMenuImage } = clickedMenuDiv; // Ensure clickedMenuDiv is defined and accessible
+
+  // Replace images in leftBackground and rightBackground
+  let leftBackground = document.getElementById("leftBackground");
+  let rightBackground = document.getElementById("rightBackground");
+
+  if (leftBackground && greenBurgerMenu) {
+    leftBackground.replaceChild(greenBurgerMenu, leftBackground.firstChild);
+  }
+  if (rightBackground && greenBurgerMenuImage) {
+    rightBackground.replaceChild(greenBurgerMenuImage, rightBackground.firstChild);
+  }
+}
+
+function replaceHeader(newHeader) {
+  let existingHeader = document.getElementById("currentHeaderId"); // Replace with your current header's ID
+  if (existingHeader && newHeader) {
+    existingHeader.parentNode.replaceChild(newHeader, existingHeader);
+  }
+
   // Header with logo Setup
   headerWithLogoText = newDiv("header");
   headerWithLogoText.style.height = "60px";
@@ -16,7 +45,7 @@ export function setupHeaderWithLogoText(contentDiv) {
   // headerWithLogoText.style.backgroundColor = "blue";
   headerWithLogoText.style.paddingLeft = "90px";
   headerWithLogoText.style.paddingRight = "85px";
-  console.log("headerWithLogoText created")
+  console.log("headerWithLogoText created");
   return headerWithLogoText;
 }
 
