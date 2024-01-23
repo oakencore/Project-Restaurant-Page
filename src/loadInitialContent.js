@@ -14,6 +14,7 @@ import {
   setupBackground,
   setupFooter,
   setupHeader,
+  setupHeaderWithLogoText,
 } from "./helperFunctions.js";
 import { createHeaderDivs } from "./headers.js";
 import {
@@ -25,124 +26,93 @@ import {
 import { createLogoTextDiv } from "./logo.js";
 import { newDiv } from "./divFunctions.js";
 
+//Set up hidden divs for menu.
+function getClickedMenuDiv() {
+  return {
+    greenBurgerMenu: createMenuContent(),
+    greenBurgerMenuImage: createFoodImage(),
+  };
+}
+
+function setupMenuClickListener() {
+  const menuElement = document.getElementById("menu");
+  if (!menuElement) {
+    console.error("Menu element not found");
+    return;
+  }
+
+  // Check if the event listener has already been added
+  if (!menuElement.classList.contains("click-listener-added")) {
+    menuElement.addEventListener("click", () => {
+      const clickedMenuDiv = getClickedMenuDiv();
+      console.log("Clicked Menu Div:", clickedMenuDiv);
+      setupHeaderWithLogoText(clickedMenuDiv);
+    });
+
+    menuElement.classList.add("click-listener-added");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  initialisePageContent();
+});
+
 // Function to initialize page content
 export function initialisePageContent() {
   console.log("Initialising burger grill...Heating up the fryers.");
+  // Set global styles
+  setGlobalStyles();
 
-  // Global Variables
-  let contentDiv;
-  let header;
-  let leftDiv;
-  let rightDiv;
-  let menuDiv;
-  let addressDiv;
-  let contactDiv;
-  let bookingDiv;
-
-  // Create main content div if it doesn't exist
-  try {
-    console.log("Applying Global styles");
-    setGlobalStyles();
-
-    console.log("Getting contentDiv");
-    contentDiv =
-      document.getElementById("content") || document.createElement("div");
-
-    console.log("Setting contentDiv.id");
+  // Check if contentDiv already exists
+  let contentDiv = document.getElementById("content");
+  if (!contentDiv) {
+    contentDiv = document.createElement("div");
     contentDiv.id = "content";
-
-    console.log("Checking if contentDiv in document");
-    if (!document.body.contains(contentDiv)) {
-      console.log("Appending contentDiv to body");
-      document.body.appendChild(contentDiv);
-    }
-  } catch (error) {
-    console.error("Content div initialisation error:", error);
-    throw error;
+    document.body.appendChild(contentDiv);
   }
 
-  // Setup Header. The function returns the header.
-  header = setupHeader();
-  appendChildFunction(contentDiv, header);
+  // Setup header with all necessary divs
+  let header = document.getElementById("header");
+  if (!header) {
+    header = setupHeader();
+    appendChildFunction(contentDiv, header);
 
-  // Setup divs within header div
-  ({ leftDiv, rightDiv } = createHeaderDivs());
-  appendChildFunction(header, leftDiv);
-  appendChildFunction(header, rightDiv);
+    // Create and append divs within header
+    const { leftDiv, rightDiv } = createHeaderDivs();
+    appendChildFunction(header, leftDiv);
+    appendChildFunction(header, rightDiv);
 
-  //Set up hidden divs for menu. 
-  const greenBurgerMenu = createMenuContent();
-  const greenBurgerMenuImage = createFoodImage();
-  const clickedMenuDiv = {greenBurgerMenu, greenBurgerMenuImage};
-  
-  // Add menu, address, contact to leftDiv.
-  // The createMenuDiv function creates and returns a clickable and hoverable 'menu' div, which toggles the display of various elements like productImages, logoText, and menu content on the page, based on their existence and current state.
-  menuDiv = createMenuDiv();
-  if (!menuDiv) {
-    throw new Error("createMenuDiv returned null");
-  }
-  addressDiv = createAddressDiv();
-  if (!addressDiv) {
-    throw new Error("createAddressDiv returned null");
-  }
-  contactDiv = createContactDiv();
-  if (!contactDiv) {
-    throw new Error("createContactDiv returned null!");
-  }
-
-  try {
+    // Append menu, address, and contact divs to leftDiv
+    const menuDiv = createMenuDiv();
     appendChildFunction(leftDiv, menuDiv);
-  } catch (error) {
-    console.error("Append child error leftdiv and menudiv:", error);
-  }
-  try {
+    const addressDiv = createAddressDiv();
     appendChildFunction(leftDiv, addressDiv);
-  } catch (error) {
-    console.error("Append child error leftdiv and addressdiv");
-  }
-  try {
+    const contactDiv = createContactDiv();
     appendChildFunction(leftDiv, contactDiv);
-  } catch (error) {
-    console.error("Append child error leftdiv and contactDiv");
-  }
 
-  // Add Booking to rightDiv
-  bookingDiv = createBookingDiv();
-  if (!bookingDiv) {
-    throw new Error("bookingDiv returned null!");
-  }
-  appendChildFunction(rightDiv, bookingDiv);
-  if (appendChildFunction(rightDiv, bookingDiv) === null) {
-    throw new Error("appendChildFunction rightDiv returned null");
+    // Append booking div to rightDiv
+    const bookingDiv = createBookingDiv();
+    appendChildFunction(rightDiv, bookingDiv);
   }
 
   const divider = createDivider();
   appendChildFunction(contentDiv, divider);
 
-  //the createlogotextDiv function does not append to anything. It just returns the logotextdiv
-  console.log("Creating logo text");
   const logoText = createLogoTextDiv();
-  if (!logoText) {
-    console.error("createLogoTextDiv returned null");
-    throw new Error("createLogoTextDiv returned null");
-  }
   appendChildFunction(contentDiv, logoText);
-  // debugger;
 
-  const background = newDiv("background");
-  setupBackground(background);
+  const background = setupBackground(newDiv("background"));
   const { leftBackground, rightBackground } = createBackgroundDivs();
-
-  const burgerImage = createBurgerImage();
-  const sidesImage = createSidesImage();
-  appendChildFunction(leftBackground, burgerImage);
-  appendChildFunction(rightBackground, sidesImage);
+  appendChildFunction(leftBackground, createBurgerImage());
+  appendChildFunction(rightBackground, createSidesImage());
   appendChildFunction(background, leftBackground);
   appendChildFunction(background, rightBackground);
   appendChildFunction(contentDiv, background);
 
   const footerDiv = setupFooter();
-  const footerText = createFooterTextDiv();
   appendChildFunction(contentDiv, footerDiv);
-  appendChildFunction(footerDiv, footerText);
+  appendChildFunction(footerDiv, createFooterTextDiv());
+
+  setupMenuClickListener(getClickedMenuDiv());
+
 }

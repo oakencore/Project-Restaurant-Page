@@ -1,28 +1,71 @@
 import { newDiv } from "./divFunctions.js";
 import { appendChildFunction } from "./appendChildFunction.js";
 import { createLogoTextDiv } from "./logo.js";
-import { createHeaderDivsWithLogoText, swapToHeaderWithLogoText } from "./headers.js";
-// TODO: Might need to add the swap function here?
-export function setupHeaderWithLogoText() {
-  // Use the functions from headers.js to create header divs with logo text
-  const { leftDivWithLogoText, rightDivWithLogoText } = createHeaderDivsWithLogoText();
+import { createHeaderDivsWithLogoText } from "./headers.js";
 
-  // Assume originalHeader, leftDiv, rightDiv, etc. are defined globally or accessible here
-  // Swap the headers
-  swapToHeaderWithLogoText();
-
-  // Retrieve clickedMenuDiv elements
-  const { greenBurgerMenu, greenBurgerMenuImage } = clickedMenuDiv; // Ensure clickedMenuDiv is defined and accessible
-
-  // Replace images in leftBackground and rightBackground
-  let leftBackground = document.getElementById("leftBackground");
-  let rightBackground = document.getElementById("rightBackground");
-
-  if (leftBackground && greenBurgerMenu) {
-    leftBackground.replaceChild(greenBurgerMenu, leftBackground.firstChild);
+export function swapToHeaderWithLogoText(clickedMenuDiv) {
+  const existingHeader = document.getElementById('header');
+  if (!existingHeader) {
+    console.error('Header element not found');
+    return;
   }
-  if (rightBackground && greenBurgerMenuImage) {
-    rightBackground.replaceChild(greenBurgerMenuImage, rightBackground.firstChild);
+
+  // Clear the existing content of the header
+  while (existingHeader.firstChild) {
+    existingHeader.removeChild(existingHeader.firstChild);
+  }
+
+  // Assuming createHeaderDivsWithLogoText() creates the necessary divs
+  const { leftDivWithLogoText, rightDivWithLogoText } = createHeaderDivsWithLogoText();
+  const logoText = createLogoTextDiv();
+
+  // Append the left div, logo text, and right div to the existing header
+  existingHeader.appendChild(leftDivWithLogoText);
+  existingHeader.appendChild(logoText);
+  existingHeader.appendChild(rightDivWithLogoText);
+}
+
+
+
+export function setupHeaderWithLogoText(clickedMenuDiv) {
+  if (!clickedMenuDiv) {
+    console.error("clickedMenuDiv is undefined");
+    return;
+  }
+  const existingHeader = document.getElementById("header");
+  if (existingHeader) {
+    // Clear existing header content before appending new elements
+    while (existingHeader.firstChild) {
+      existingHeader.removeChild(existingHeader.firstChild);
+    }
+
+    // Append new elements to the header
+    const { leftDivWithLogoText, rightDivWithLogoText } =
+      createHeaderDivsWithLogoText();
+    const logoText = createLogoTextDiv();
+
+    existingHeader.appendChild(leftDivWithLogoText);
+    existingHeader.appendChild(logoText);
+    existingHeader.appendChild(rightDivWithLogoText);
+
+    // Update left and right background images with menu content
+    const { greenBurgerMenu, greenBurgerMenuImage } = clickedMenuDiv;
+    updateBackgroundImages(greenBurgerMenu, greenBurgerMenuImage);
+  }
+}
+
+function updateBackgroundImages(menuImage, menuImageRight) {
+  const leftBackground = document.getElementById("leftBackground");
+  const rightBackground = document.getElementById("rightBackground");
+
+  // Replace the first child in left background with menu image
+  if (leftBackground && menuImage) {
+    leftBackground.replaceChild(menuImage, leftBackground.firstChild);
+  }
+
+  // Replace the first child in right background with menu image
+  if (rightBackground && menuImageRight) {
+    rightBackground.replaceChild(menuImageRight, rightBackground.firstChild);
   }
 }
 
@@ -122,9 +165,14 @@ export function setGlobalStyles() {
   console.log("Global Styles Applied")
 }
 
-export function setupHeader(contentDiv) {
-  console.log("setupHeader: Creating Header")
+export function setupHeader() {
+  console.log("setupHeader: Creating Header");
+  let existingHeader = document.getElementById("header");
+  if (existingHeader) {
+    return existingHeader;
+  }
   const header = newDiv("header");
+  header.id = "header";
   header.style.height = "60px";
   header.style.display = "flex";
   header.style.flexDirection = "row";
@@ -133,7 +181,6 @@ export function setupHeader(contentDiv) {
   header.style.alignItems = "center";
   header.style.paddingBlockStart = "2%";
   header.style.paddingBlockEnd = "2%";
-  let originalHeader = header;
   return header
 }
 

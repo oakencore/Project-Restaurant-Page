@@ -17,10 +17,6 @@ export function createMenuDiv() {
 }
 
 
-
-
-
-
 export function createAddressDiv() {
   const address = newDiv("address", "Visit Us");
   const logoText = createLogoTextDiv();
