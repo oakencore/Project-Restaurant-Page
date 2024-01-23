@@ -1,57 +1,24 @@
-// Import statements
 import {
-  createBackgroundDivs,
-  createFooterTextDiv,
-  createBurgerImage,
-  createSidesImage,
-  createMenuContent,
-  createFoodImage,
-} from "./contentCreationFunctions.js";
-import { appendChildFunction } from "./appendChildFunction.js";
-import {
-  createDivider,
   setGlobalStyles,
-  setupBackground,
-  setupFooter,
   setupHeader,
-  setupHeaderWithLogoText,
-} from "./helperFunctions.js";
-import { createHeaderDivs } from "./headers.js";
-import {
+  appendChildFunction,
+  createHeaderDivs,
   createMenuDiv,
+  makeClickable,
   createAddressDiv,
   createContactDiv,
   createBookingDiv,
-} from "./headerElements.js";
-import { createLogoTextDiv } from "./logo.js";
-import { newDiv } from "./divFunctions.js";
-
-//Set up hidden divs for menu.
-function getClickedMenuDiv() {
-  return {
-    greenBurgerMenu: createMenuContent(),
-    greenBurgerMenuImage: createFoodImage(),
-  };
-}
-
-function setupMenuClickListener() {
-  const menuElement = document.getElementById("menu");
-  if (!menuElement) {
-    console.error("Menu element not found");
-    return;
-  }
-
-  // Check if the event listener has already been added
-  if (!menuElement.classList.contains("click-listener-added")) {
-    menuElement.addEventListener("click", () => {
-      const clickedMenuDiv = getClickedMenuDiv();
-      console.log("Clicked Menu Div is this type:", clickedMenuDiv);
-      setupHeaderWithLogoText(clickedMenuDiv);
-    });
-
-    menuElement.classList.add("click-listener-added");
-  }
-}
+  setupDivClickListeners,
+  createDivider,
+  createLogoTextDiv,
+  setupBackground,
+  newDiv,
+  createBackgroundDivs,
+  createBurgerImage,
+  createSidesImage,
+  setupFooter,
+  createFooterTextDiv,
+} from "./functions";
 
 document.addEventListener("DOMContentLoaded", (event) => {
   initialisePageContent();
@@ -84,7 +51,9 @@ export function initialisePageContent() {
 
     // Append menu, address, and contact divs to leftDiv
     const menuDiv = createMenuDiv();
+    makeClickable(menuDiv);
     appendChildFunction(leftDiv, menuDiv);
+
     const addressDiv = createAddressDiv();
     appendChildFunction(leftDiv, addressDiv);
     const contactDiv = createContactDiv();
@@ -93,6 +62,8 @@ export function initialisePageContent() {
     // Append booking div to rightDiv
     const bookingDiv = createBookingDiv();
     appendChildFunction(rightDiv, bookingDiv);
+
+    setupDivClickListeners(menuDiv, addressDiv, contactDiv);
   }
 
   const divider = createDivider();
@@ -112,7 +83,4 @@ export function initialisePageContent() {
   const footerDiv = setupFooter();
   appendChildFunction(contentDiv, footerDiv);
   appendChildFunction(footerDiv, createFooterTextDiv());
-
-  setupMenuClickListener(getClickedMenuDiv());
-
 }
