@@ -28,8 +28,9 @@ export function swapToHeaderWithLogoText(clickedMenuDiv) {
 
 
 export function setupHeaderWithLogoText(clickedMenuDiv) {
+  
   if (!clickedMenuDiv) {
-    console.error("clickedMenuDiv is undefined");
+    console.error("clickedMenuDiv is undefined", clickedMenuDiv);
     return;
   }
   const existingHeader = document.getElementById("header");

@@ -11,8 +11,10 @@ export function createMenuDiv() {
   addHoverEffect(menu);
   makeClickable(menu, () => {
     console.log("Menu clicked");
-    setupHeaderWithLogoText();
+    // Giving the menu I just clicked as an argument
+    setupHeaderWithLogoText(menu);
   });
+  console.log("Menu is this before being returned by createMenuDiv()", menu)
   return menu;
 }
 

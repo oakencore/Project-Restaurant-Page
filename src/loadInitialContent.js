@@ -45,7 +45,7 @@ function setupMenuClickListener() {
   if (!menuElement.classList.contains("click-listener-added")) {
     menuElement.addEventListener("click", () => {
       const clickedMenuDiv = getClickedMenuDiv();
-      console.log("Clicked Menu Div:", clickedMenuDiv);
+      console.log("Clicked Menu Div is this type:", clickedMenuDiv);
       setupHeaderWithLogoText(clickedMenuDiv);
     });
 
