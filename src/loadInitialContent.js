@@ -21,10 +21,6 @@ import {
   createHeaderLogoTextDiv,
 } from "./functions";
 
-document.addEventListener("DOMContentLoaded", (event) => {
-  initialisePageContent();
-});
-
 // Function to initialise page content
 export function initialisePageContent(callback) {
   console.log("Initialising burger grill...Heating up the fryers.");
@@ -93,9 +89,10 @@ export function initialisePageContent(callback) {
   const footerDiv = setupFooter();
   appendChildFunction(contentDiv, footerDiv);
   appendChildFunction(footerDiv, createFooterTextDiv());
-  console.log(leftBackground);
-  setupDivClickListeners(menuDiv, addressDiv, contactDiv,leftBackground,rightBackground);
+  
+  setupDivClickListeners(menuDiv, addressDiv, contactDiv, leftBackground, rightBackground);
   if (typeof callback === "function") {
     callback();
   }
+  
 }
