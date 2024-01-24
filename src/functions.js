@@ -49,6 +49,21 @@ export function createBookingDiv() {
   });
   return booking;
 }
+
+export function createHeaderLogoTextDiv() {
+  const headerLogoTextDiv = newDiv("headerLogoText", "GREENBURGER")
+  // can change to flex to make it appear
+  headerLogoTextDiv.style.display = "none";
+  headerLogoTextDiv.style.flexDirection = "row";
+  headerLogoTextDiv.style.justifyContent = "center"
+  headerLogoTextDiv.style.alignItems = "center";
+  headerLogoTextDiv.style.fontSize = "30px";
+  headerLogoTextDiv.style.color = "black";
+  console.log("Header logoTextDiv Created");
+  return headerLogoTextDiv
+}
+
+
 export function createHeaderDivs() {
   const leftDiv = newDiv("left");
   leftDiv.style.display = "flex";
@@ -265,63 +280,77 @@ export function setupBackground(background) {
   return background;
 }
 
-export function setupDivClickListeners(menuDiv, addressDiv, contactDiv) {
+export function setupDivClickListeners(menuDiv, addressDiv, contactDiv, leftBackground,rightBackground) {
   console.log("Setting up div click listeners");
-
-  // const menuDiv = document.getElementById("menuDiv");
-  // const addressDiv = document.getElementById("addressDiv");
-  // const contactDiv = document.getElementById("contactDiv");
-  console.log("menuDiv:", menuDiv);
-  console.log("addressDiv:", addressDiv);
-  console.log("contactDiv:", contactDiv);
+  console.log(leftBackground);
 
   if (menuDiv) {
     menuDiv.addEventListener("click", () => {
-      console.log("menuDiv clicked");
+      try {
+        console.log("menuDiv clicked");
 
-      const existingHeader = document.getElementById("header");
-      console.log("existingHeader:", existingHeader);
+        console.log("leftBackground element:", leftBackground);
+        console.log("rightBackground element:", rightBackground);
 
-      const leftDivWithLogoText = existingHeader
-        ? existingHeader.querySelector("#leftDivWithLogoText")
-        : null;
-      const rightDivWithLogoText = existingHeader
-        ? existingHeader.querySelector("#rightDivWithLogoText")
-        : null;
+        // remove contents of left and right background for the menu
+        leftBackground.innerHTML = "";
+        console.log("left background is now", leftBackground);
+        rightBackground.innerHTML = "";
+        console.log("Right background is now", rightBackground);
 
-      console.log("leftDivWithLogoText:", leftDivWithLogoText);
-      console.log("rightDivWithLogoText:", rightDivWithLogoText);
+        // Calling my functions to create content for the menu and image on the menu page
+        const menuContent = createMenuContent();
+        const foodImage = createFoodImage();
 
-      if (!leftDivWithLogoText || !rightDivWithLogoText) {
-        swapToHeaderWithLogoText(menuDiv);
-      } else {
-        const leftBackground = document.getElementById("leftBackground");
-        const rightBackground = document.getElementById("rightBackground");
+        // Set display to flex to make them visible
+        menuContent.style.display = "flex";
+        foodImage.style.display = "flex";
 
+        // Append new content to left and right background divs
+        leftBackground.appendChild(menuContent);
+        rightBackground.appendChild(foodImage);
         console.log("leftBackground:", leftBackground);
         console.log("rightBackground:", rightBackground);
 
-        if (
-          leftBackground &&
-          rightBackground &&
-          (!leftBackground.firstChild ||
-            !leftBackground.firstChild.classList.contains("burgerImage")) &&
-          (!rightBackground.firstChild ||
-            !rightBackground.firstChild.classList.contains("sidesImage"))
-        ) {
-          if (leftBackground.firstChild) {
-            leftBackground.removeChild(leftBackground.firstChild);
-          }
-          if (rightBackground.firstChild) {
-            rightBackground.removeChild(rightBackground.firstChild);
-          }
-
-          const menuContent = createMenuContent();
-          const foodImage = createFoodImage();
-
-          leftBackground.appendChild(menuContent);
-          rightBackground.appendChild(foodImage);
+        console.log("Checking access to centerDiv");
+        const centerDiv = document.getElementById("centerDiv");
+        if (!centerDiv) {
+          console.error("ERROR: centerDiv not found.");
+          return;
         }
+        console.log("centerDiv:", centerDiv);
+
+        console.log("Checking access to contentDiv");
+        const contentDiv = document.getElementById("content");
+        if (!contentDiv) {
+          console.error("ERROR: contentDiv not found.");
+          return;
+        }
+        console.log("contentDiv:", contentDiv);
+
+        console.log("Checking access to logoText");
+        const logoText = contentDiv.querySelector("#logo");
+        if (!logoText) {
+          console.error("ERROR: logo not found within contentDiv.");
+          return;
+        }
+        console.log("logo:", logoText);
+
+        if (centerDiv.style.display === "none") {
+          centerDiv.style.display = "flex";
+          centerDiv.style.flexDirection = "row";
+          centerDiv.style.alignItems = "center";
+          centerDiv.style.justifyContent = "center";
+          centerDiv.style.fontSize = "30px";
+          centerDiv.style.color = "black";
+          // centerDiv.style.paddingTop = "";
+          // centerDiv.style.paddingBottom = "";
+          // centerDiv.style.margin = "";
+          console.log("Changing logoText display to 'none'");
+          logoText.style.display = "none";
+        }
+      } catch (error) {
+        console.error("Error in click handler:", error);
       }
     });
   }
@@ -329,17 +358,18 @@ export function setupDivClickListeners(menuDiv, addressDiv, contactDiv) {
   if (addressDiv) {
     addressDiv.addEventListener("click", () => {
       console.log("addressDiv clicked");
-      swapToHeaderWithLogoText(addressDiv);
+      // Logic for addressDiv can be added here
     });
   }
 
   if (contactDiv) {
     contactDiv.addEventListener("click", () => {
       console.log("contactDiv clicked");
-      swapToHeaderWithLogoText(contactDiv);
+      // Logic for contactDiv can be added here
     });
   }
 }
+
 export function loadMenu() {}
 document.addEventListener("DOMContentLoaded", () => {
   loadMenu();
@@ -349,6 +379,7 @@ let logoText = null;
 export function createLogoTextDiv() {
   if (!logoText) {
     logoText = newDiv("logo", "GREENBURGER");
+    // I can set this display to none to make it not visible. 
     logoText.style.display = "flex";
     logoText.style.flexDirection = "row";
     logoText.style.justifyContent = "center";
@@ -375,15 +406,7 @@ export function addHoverEffect(element) {
     element.style.boxShadow = "none";
   });
 }
-export function addClickEventListeners() {
-  document.getElementById("menu").addEventListener("click", handleMenuContent);
-  document
-    .getElementById("address")
-    .addEventListener("click", handleAddressContent);
-  document
-    .getElementById("contact")
-    .addEventListener("click", handleContactContent);
-}
+
 export function newDiv(divId, content) {
   // Create a new div
   const div = document.createElement("div");
@@ -488,6 +511,11 @@ export function createMenuContent() {
   const menuContent = newDiv("menuContent");
   // Hidden at first
   menuContent.style.display = "none";
+  menuContent.style.flexDirection = "row";
+  menuContent.style.alignItems = "center";
+  menuContent.style.justifyContent = "center";
+  menuContent.style.fontSize = "30px";
+  menuContent.style.color = "black";
 
   // Add menu sections here
   // Example: Adding the Burgers section
@@ -516,6 +544,10 @@ export function createMenuContent() {
 export function createFoodImage() {
   const menuFoodImage = newDiv("menuFoodImage");
   menuFoodImage.style.display = "none";
+  menuFoodImage.style.flexDirection = "row";
+  menuFoodImage.style.alignItems = "center";
+  menuFoodImage.style.justifyContent = "center";
+
 
   const menuFoodDisplayImage = document.createElement("img");
   menuFoodDisplayImage.src = "menuBurgersImage.png";

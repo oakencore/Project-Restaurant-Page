@@ -18,14 +18,15 @@ import {
   createSidesImage,
   setupFooter,
   createFooterTextDiv,
+  createHeaderLogoTextDiv,
 } from "./functions";
 
 document.addEventListener("DOMContentLoaded", (event) => {
   initialisePageContent();
 });
 
-// Function to initialize page content
-export function initialisePageContent() {
+// Function to initialise page content
+export function initialisePageContent(callback) {
   console.log("Initialising burger grill...Heating up the fryers.");
   // Set global styles
   setGlobalStyles();
@@ -38,6 +39,9 @@ export function initialisePageContent() {
     document.body.appendChild(contentDiv);
   }
 
+  // Gotta declare these here outside of the if block so the setupDivClickListeners can use them
+  let menuDiv, addressDiv, contactDiv;
+
   // Setup header with all necessary divs
   let header = document.getElementById("header");
   if (!header) {
@@ -46,24 +50,30 @@ export function initialisePageContent() {
 
     // Create and append divs within header
     const { leftDiv, rightDiv } = createHeaderDivs();
+    const centerDiv = newDiv("centerDiv","GREENBURGER");
+    // Hiding it to start
+    centerDiv.style.display = "none";
     appendChildFunction(header, leftDiv);
+    appendChildFunction(header, centerDiv);
     appendChildFunction(header, rightDiv);
 
     // Append menu, address, and contact divs to leftDiv
-    const menuDiv = createMenuDiv();
+    menuDiv = createMenuDiv();
     makeClickable(menuDiv);
     appendChildFunction(leftDiv, menuDiv);
 
-    const addressDiv = createAddressDiv();
+    addressDiv = createAddressDiv();
     appendChildFunction(leftDiv, addressDiv);
-    const contactDiv = createContactDiv();
+
+    contactDiv = createContactDiv();
     appendChildFunction(leftDiv, contactDiv);
+
+    const headerLogoTextDiv = createHeaderLogoTextDiv();
+    appendChildFunction(centerDiv, headerLogoTextDiv);
 
     // Append booking div to rightDiv
     const bookingDiv = createBookingDiv();
     appendChildFunction(rightDiv, bookingDiv);
-
-    setupDivClickListeners(menuDiv, addressDiv, contactDiv);
   }
 
   const divider = createDivider();
@@ -83,4 +93,9 @@ export function initialisePageContent() {
   const footerDiv = setupFooter();
   appendChildFunction(contentDiv, footerDiv);
   appendChildFunction(footerDiv, createFooterTextDiv());
+  console.log(leftBackground);
+  setupDivClickListeners(menuDiv, addressDiv, contactDiv,leftBackground,rightBackground);
+  if (typeof callback === "function") {
+    callback();
+  }
 }
