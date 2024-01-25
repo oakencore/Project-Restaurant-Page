@@ -424,7 +424,7 @@ export function makeClickable(element, onClickFunction) {
   element.addEventListener("click", onClickFunction);
 }
 
-function visitUsAddressText() {
+export function visitUsAddressText() {
   const visitUsAddressText = newDiv("visitUsAddressText");
   visitUsAddressText.style.display = "none";
   visitUsAddressText.style.flexDirection = "column";
@@ -440,7 +440,7 @@ function visitUsAddressText() {
   return visitUsAddressText;
 }
 
-function visitUsMapImage() {
+export function visitUsMapImage() {
   const visitUsMapImage = newDiv("visitUsMapImage");
 
   visitUsMapImage.style.display = "none";
@@ -460,7 +460,7 @@ function visitUsMapImage() {
   return visitUsMapImage;
 }
 
-function contactUsText() {
+export function contactUsText() {
   const contactUsText = newDiv("contactUsText");
   contactUsText.style.display = "none";
   contactUsText.style.flexDirection = "column";
@@ -474,7 +474,7 @@ function contactUsText() {
   return contactUsText;
 }
 
-function contactUsImage() {
+export function contactUsImage() {
   const contactUsImage = newDiv("contactUsImage");
 
   contactUsImage.style.display = "none";

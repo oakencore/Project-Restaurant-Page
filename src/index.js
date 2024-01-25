@@ -1,8 +1,5 @@
 import {
   initialisePageContent,
-  menuDiv,
-  addressDiv,
-  contactDiv,
 } from "./loadInitialContent.js";
 import { showMenuContent } from "./menu.js";
 import { showContactContent } from "./contact.js";
@@ -10,27 +7,18 @@ import { showVisitUsContent } from "./visitUs.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  const { menuDiv, addressDiv, contactDiv } = initialisePageContent();
+  const { menuDiv, addressDiv, contactDiv, leftBackground, rightBackground } = initialisePageContent();
 
-  // Function to clear the content area
-  function clearContent() {
-    const contentDiv = document.getElementById("content");
-    contentDiv.innerHTML = "";
-  }
-
-  // Setting up event listenersI
-  menuDiv.addEventListener("click", () => {
-    clearContent();
-    showMenuContent();
+  menuDiv.addEventListener('click', () => {
+    showMenuContent(leftBackground, rightBackground);
   });
 
-  contactDiv.addEventListener("click", () => {
-    clearContent();
-    showContactContent();
+  contactDiv.addEventListener('click', () => {
+    showContactContent(leftBackground, rightBackground);
   });
 
-  addressDiv.addEventListener("click", () => {
-    clearContent();
-    showVisitUsContent();
+  addressDiv.addEventListener('click', () => {
+    showVisitUsContent(leftBackground, rightBackground);
   });
 });
+

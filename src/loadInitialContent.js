@@ -88,9 +88,6 @@ export function initialisePageContent(callback) {
   const footerDiv = setupFooter();
   appendChildFunction(contentDiv, footerDiv);
   appendChildFunction(footerDiv, createFooterTextDiv());
-
-  if (typeof callback === "function") {
-    callback();
-  }
-  return {menuDiv, addressDiv, contactDiv};
+  
+  return {menuDiv, addressDiv, contactDiv,leftBackground, rightBackground};
 }
