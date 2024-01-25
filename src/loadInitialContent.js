@@ -8,7 +8,6 @@ import {
   createAddressDiv,
   createContactDiv,
   createBookingDiv,
-  setupDivClickListeners,
   createDivider,
   createLogoTextDiv,
   setupBackground,
@@ -23,7 +22,7 @@ import {
 
 // Function to initialise page content
 export function initialisePageContent(callback) {
-  console.log("Initialising burger grill...Heating up the fryers.");
+  console.log("Initialising burger grill...Heating up the fryers...");
   // Set global styles
   setGlobalStyles();
 
@@ -46,7 +45,7 @@ export function initialisePageContent(callback) {
 
     // Create and append divs within header
     const { leftDiv, rightDiv } = createHeaderDivs();
-    const centerDiv = newDiv("centerDiv","GREENBURGER");
+    const centerDiv = newDiv("centerDiv", "GREENBURGER");
     // Hiding it to start
     centerDiv.style.display = "none";
     appendChildFunction(header, leftDiv);
@@ -89,10 +88,9 @@ export function initialisePageContent(callback) {
   const footerDiv = setupFooter();
   appendChildFunction(contentDiv, footerDiv);
   appendChildFunction(footerDiv, createFooterTextDiv());
-  
-  setupDivClickListeners(menuDiv, addressDiv, contactDiv, leftBackground, rightBackground);
+
   if (typeof callback === "function") {
     callback();
   }
-  
+  return {menuDiv, addressDiv, contactDiv};
 }
