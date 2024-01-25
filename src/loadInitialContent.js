@@ -35,7 +35,7 @@ export function initialisePageContent(callback) {
   }
 
   // Gotta declare these here outside of the if block so the setupDivClickListeners can use them
-  let menuDiv, addressDiv, contactDiv;
+  let menuDiv, addressDiv, contactDiv, bookingDiv;
 
   // Setup header with all necessary divs
   let header = document.getElementById("header");
@@ -67,7 +67,7 @@ export function initialisePageContent(callback) {
     appendChildFunction(centerDiv, headerLogoTextDiv);
 
     // Append booking div to rightDiv
-    const bookingDiv = createBookingDiv();
+    bookingDiv = createBookingDiv();
     appendChildFunction(rightDiv, bookingDiv);
   }
 
@@ -88,6 +88,5 @@ export function initialisePageContent(callback) {
   const footerDiv = setupFooter();
   appendChildFunction(contentDiv, footerDiv);
   appendChildFunction(footerDiv, createFooterTextDiv());
-  
-  return {menuDiv, addressDiv, contactDiv,leftBackground, rightBackground};
+  return { menuDiv, addressDiv, contactDiv, leftBackground, rightBackground, bookingDiv };
 }

@@ -11,7 +11,6 @@ export function createAddressDiv() {
   addHoverEffect(address);
   makeClickable(address, () => {
     logoText.style.display = "none";
-    productImages.style.display = "none";
     console.log("Address clicked");
   });
   return address;
@@ -23,7 +22,6 @@ export function createContactDiv() {
   addHoverEffect(contact);
   makeClickable(contact, () => {
     logoText.style.display = "none";
-    productImages.style.display = "none";
     console.log("Contact clicked");
   });
   return contact;
@@ -31,24 +29,31 @@ export function createContactDiv() {
 
 export function createBookingDiv() {
   const booking = newDiv("booking", "Book A Table");
-  makeClickable(booking, () => {
-    console.log("Booking clicked");
-  });
-  booking.style.backgroundColor = "black";
-  booking.style.padding = "10px";
-  booking.style.color = "green";
+
   booking.addEventListener("mouseover", () => {
     booking.style.backgroundColor = "green";
     booking.style.color = "white";
     booking.style.outline = "2px solid black";
   });
+
   booking.addEventListener("mouseout", () => {
     booking.style.backgroundColor = "black";
     booking.style.color = "green";
     booking.style.outline = "none";
   });
+
+  makeClickable(booking, () => {
+    console.log("Booking clicked");
+  });
+
+  booking.style.backgroundColor = "black";
+  booking.style.padding = "10px";
+  booking.style.color = "green";
+
   return booking;
 }
+
+
 
 export function createHeaderLogoTextDiv() {
   const headerLogoTextDiv = newDiv("headerLogoText", "GREENBURGER");
