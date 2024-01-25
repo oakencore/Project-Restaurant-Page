@@ -193,7 +193,6 @@ export function createWrapperDiv() {
   console.log("wrapperdiv created");
   return wrapperDiv;
 }
-// Helper functions
 
 export function setGlobalStyles() {
   // Global Styling of main page
@@ -271,10 +270,10 @@ export function addHoverEffect(element) {
 }
 
 export function newDiv(divId, content) {
-  // Create a new div
+  // Create new div
   const div = document.createElement("div");
 
-  // Sets the ID for the div class
+  // Set ID for the div 
   if (divId) {
     div.id = divId;
   }
@@ -285,7 +284,6 @@ export function newDiv(divId, content) {
   // Return the created div to be used elsewhere
   return div;
 }
-// Content Creation Functions
 
 export function createAddressContent() {
   addressContent = newDiv("addressContent");
@@ -369,7 +367,6 @@ export function createFooterTextDiv() {
 
   return footerText;
 }
-// Function to create and return the menu content div
 
 export function createMenuContent() {
   const menuContent = newDiv("menuContent");
@@ -381,8 +378,6 @@ export function createMenuContent() {
   menuContent.style.fontSize = "20px";
   menuContent.style.color = "black";
 
-  // Add menu sections here
-  // Example: Adding the Burgers section
   const burgersSection = newDiv("burgersSection");
   burgersSection.innerHTML = `<h2>Burgers</h2>
       <p>The Avocado Dream - $12.50</p>
@@ -424,7 +419,7 @@ export function createFoodImage() {
   return menuFoodImage;
 }
 export function makeClickable(element, onClickFunction) {
-  // Change the cursor to indicate clickable
+  // Makes your cursor look like it's clickable
   element.style.cursor = "pointer";
   element.addEventListener("click", onClickFunction);
 }

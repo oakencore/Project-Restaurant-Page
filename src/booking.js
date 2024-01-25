@@ -29,7 +29,7 @@ export function createAndShowBookingForm(bookingDiv) {
     }
   }
 
-  // Add or remove the event listener if it's visible or not
+  // Add/remove the listener if it's visible or not
   if (form.style.display === "block") {
     document.addEventListener("click", hideFormOnClickOutside, true);
   } else {
