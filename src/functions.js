@@ -449,7 +449,7 @@ export function visitUsMapImage() {
   visitUsMapImage.style.justifyContent = "center";
 
   const visitUsMapDisplayImage = document.createElement("img");
-  visitUsMapDisplayImage.src = "greenBurgerMap.png";
+  visitUsMapDisplayImage.src = "greenburgerMap.png";
   visitUsMapDisplayImage.alt =
     "Image of a map showing the GREENBURGER location";
   visitUsMapDisplayImage.style.width = "400px";
